@@ -15,10 +15,12 @@
             <textarea id="message" rows="3" placeholder="Enter your message"></textarea>
         </div>
 
-        <div class="form-group">
-            <label for="mapping">Account Mapping (token:channel_id)</label>
-            <textarea id="mapping" rows="10" placeholder="token1:channel1&#10;token2:channel1&#10;token1:channel2"></textarea>
-            <small style="color: #888; font-size: 0.75rem;">One pair per line. Use 'token:channel' format.</small>
+        <div class="mapping-section">
+            <label>Account & Channel Mapping</label>
+            <div id="mapping-container">
+                <!-- Rows will be added here dynamically -->
+            </div>
+            <button onclick="addRow()" class="add-btn">+ Add Account Pair</button>
         </div>
 
         <div class="form-group">
