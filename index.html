@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord Multi-Sender</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Discord Multi-Sender</h2>
+        
+        <div class="form-group">
+            <label for="mode">Sending Mode</label>
+            <select id="mode">
+                <option value="single">Single (1 Token $\rightarrow$ 1 Channel)</option>
+                <option value="many_to_one">Many Accounts $\rightarrow$ One Channel</option>
+                <option value="one_to_many">One Account $\rightarrow$ Many Channels</option>
+                <option value="many_to_many">Many Accounts $\rightarrow$ Many Channels</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" rows="3" placeholder="Enter your message"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="token">User Tokens (one per line)</label>
+            <textarea id="token" rows="4" placeholder="Paste tokens here..."></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="channel">Channel IDs (one per line)</label>
+            <textarea id="channel" rows="4" placeholder="Paste channel IDs here..."></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="delay">Delay (seconds)</label>
+            <input type="number" step="0.1" id="delay" value="5">
+        </div>
+
+        <div class="button-group">
+            <button onclick="startSending()" id="start-button">Start Sending</button>
+            <button onclick="stopSending()" id="stop-button" class="secondary">Stop Sending</button>
+        </div>
+
+        <div id="logs"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
