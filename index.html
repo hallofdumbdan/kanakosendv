@@ -11,28 +11,14 @@
         <h2>Discord Multi-Sender</h2>
         
         <div class="form-group">
-            <label for="mode">Sending Mode</label>
-            <select id="mode">
-                <option value="single">Single (1 Token $\rightarrow$ 1 Channel)</option>
-                <option value="many_to_one">Many Accounts $\rightarrow$ One Channel</option>
-                <option value="one_to_many">One Account $\rightarrow$ Many Channels</option>
-                <option value="many_to_many">Many Accounts $\rightarrow$ Many Channels</option>
-            </select>
-        </div>
-
-        <div class="form-group">
             <label for="message">Message</label>
             <textarea id="message" rows="3" placeholder="Enter your message"></textarea>
         </div>
 
         <div class="form-group">
-            <label for="token">User Tokens (one per line)</label>
-            <textarea id="token" rows="4" placeholder="Paste tokens here..."></textarea>
-        </div>
-
-        <div class="form-group">
-            <label for="channel">Channel IDs (one per line)</label>
-            <textarea id="channel" rows="4" placeholder="Paste channel IDs here..."></textarea>
+            <label for="mapping">Account Mapping (token:channel_id)</label>
+            <textarea id="mapping" rows="10" placeholder="token1:channel1&#10;token2:channel1&#10;token1:channel2"></textarea>
+            <small style="color: #888; font-size: 0.75rem;">One pair per line. Use 'token:channel' format.</small>
         </div>
 
         <div class="form-group">
