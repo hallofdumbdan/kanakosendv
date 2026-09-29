@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Multi-Sender</title>
+    <!-- Added Inter font for a more professional look -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="app-container">
         <header>
-            <h1>Multi-Sender</h1>
+            <h1 class="brand-title">Multi-Sender</h1>
         </header>
         
         <main>
@@ -30,6 +32,7 @@
                 <div id="mapping-container">
                     <!-- Rows injected here -->
                 </div>
+                <p class="helper-text">Each row defines a specific Token $\rightarrow$ Channel relationship.</p>
             </section>
 
             <section class="card">
@@ -42,7 +45,7 @@
             </section>
 
             <div class="action-bar">
-                <button onclick="startSending()" id="start-button" class="btn-primary">Start Sending</button>
+                <button onclick="startSending()" id="start-button" class="btn-primary">Start Deployment</button>
                 <button onclick="stopSending()" id="stop-button" class="btn-secondary">Stop</button>
             </div>
 
