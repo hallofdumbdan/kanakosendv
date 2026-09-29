@@ -14,7 +14,7 @@ function addRow() {
     
     row.innerHTML = `
         <div class="input-group">
-            <input type="password" class="row-token" placeholder="User Token">
+            <input type="password" class="row-token" placeholder="Token">
         </div>
         <span class="row-sep">→</span>
         <div class="input-group">
