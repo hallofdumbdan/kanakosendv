@@ -26,22 +26,25 @@ async function sendMessage(channelID, userToken, content) {
 async function runTask(token, channelID, message, delay) {
     const tokenId = `...${token.slice(-6)}`;
     
-    // Immediate first attempt
-    const success = await sendMessage(channelID, token, message);
-    if (success) {
-        logMessage(`${tokenId} $\rightarrow$ ${channelID}: Success`, '#4caf50');
-    } else {
-        logMessage(`${tokenId} $\rightarrow$ ${channelID}: Failed`, '#f44336');
-        return; // Stop this specific loop if it fails
-    }
-
-    // Set up the loop
-    const interval = setInterval(async () => {
+    const attempt = async () => {
         const success = await sendMessage(channelID, token, message);
         if (success) {
             logMessage(`${tokenId} $\rightarrow$ ${channelID}: Success`, '#4caf50');
         } else {
             logMessage(`${tokenId} $\rightarrow$ ${channelID}: Failed. Stopping loop.`, '#f44336');
+            return false;
+        }
+        return true;
+    };
+
+    // Immediate first attempt
+    const firstSuccess = await attempt();
+    if (!firstSuccess) return;
+
+    // Set up the loop
+    const interval = setInterval(async () => {
+        const success = await attempt();
+        if (!success) {
             clearInterval(interval);
         }
     }, delay * 1000);
@@ -50,43 +53,38 @@ async function runTask(token, channelID, message, delay) {
 }
 
 async function startSending() {
-    const mode = document.getElementById('mode').value;
     const message = document.getElementById('message').value.trim();
     const delay = parseFloat(document.getElementById('delay').value);
-    
-    // Parse textareas into arrays, trimming whitespace and removing empty lines
-    const tokens = document.getElementById('token').value.split('\n').map(t => t.trim()).filter(t => t !== "");
-    const channels = document.getElementById('channel').value.split('\n').map(c => c.trim()).filter(c => c !== "");
+    const mappingText = document.getElementById('mapping').value.trim();
 
-    if (!message || tokens.length === 0 || channels.length === 0 || isNaN(delay)) {
-        alert('Please ensure message, at least one token, at least one channel, and a valid delay are provided.');
+    if (!message || !mappingText || isNaN(delay)) {
+        alert('Please fill in the message, mapping, and a valid delay.');
         return;
     }
 
-    stopSending(); // Clear any existing loops before starting new ones
-    logMessage(`Starting mode: ${mode}`, '#2196f3');
+    stopSending();
+    logMessage('Initializing mapping...', '#2196f3');
 
-    let tasks = [];
+    const lines = mappingText.split('\n');
+    let taskCount = 0;
 
-    if (mode === 'single') {
-        tasks.push({ t: tokens[0], c: channels[0] });
-    } 
-    else if (mode === 'many_to_one') {
-        tokens.forEach(t => tasks.push({ t, c: channels[0] }));
-    } 
-    else if (mode === 'one_to_many') {
-        channels.forEach(c => tasks.push({ t: tokens[0], c }));
-    } 
-    else if (mode === 'many_to_many') {
-        // Pair tokens with channels, cycling channels if there are more tokens
-        tokens.forEach((t, index) => {
-            tasks.push({ t, c: channels[index % channels.length] });
-        });
-    }
-
-    tasks.forEach(task => {
-        runTask(task.t, task.c, message, delay);
+    lines.forEach(line => {
+        const parts = line.split(':');
+        if (parts.length === 2) {
+            const token = parts[0].trim();
+            const channel = parts[1].trim();
+            if (token && channel) {
+                runTask(token, channel, message, delay);
+                taskCount++;
+            }
+        }
     });
+
+    if (taskCount === 0) {
+        logMessage('No valid token:channel pairs found.', '#f44336');
+    } else {
+        logMessage(`Started ${taskCount} active task(s).`, '#2196f3');
+    }
 }
 
 function stopSending() {
