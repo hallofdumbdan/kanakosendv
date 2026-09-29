@@ -6,13 +6,13 @@ body {
     padding: 20px;
     display: flex;
     justify-content: center;
-    align-items: flex-start; /* Changed from center to allow scrolling */
+    align-items: flex-start;
     min-height: 100vh;
 }
 
 .container {
     width: 100%;
-    max-width: 500px;
+    max-width: 550px;
     padding: 25px;
     background-color: #1E1E1E;
     border-radius: 12px;
@@ -40,24 +40,61 @@ label {
 
 input, textarea, select {
     width: 100%;
-    padding: 12px;
+    padding: 10px;
     border: 1px solid #333333;
     border-radius: 6px;
     background-color: #2E2E2E;
     color: #FFFFFF;
     box-sizing: border-box;
-    font-family: inherit;
 }
 
-input:focus, textarea:focus, select:focus {
-    outline: none;
-    border-color: #007BFF;
+/* Mapping Section Styles */
+.mapping-section {
+    margin-bottom: 20px;
+    border-top: 1px solid #333;
+    padding-top: 15px;
+}
+
+.mapping-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.mapping-row input {
+    flex: 1;
+}
+
+.separator {
+    color: #888;
+    font-weight: bold;
+}
+
+.remove-btn {
+    width: auto;
+    padding: 10px 15px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.add-btn {
+    width: 100%;
+    padding: 8px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 5px;
 }
 
 .button-group {
     display: flex;
     gap: 10px;
-    margin-top: 10px;
 }
 
 button {
@@ -69,7 +106,6 @@ button {
     border-radius: 6px;
     font-weight: bold;
     cursor: pointer;
-    transition: background 0.2s;
 }
 
 button:hover {
@@ -78,10 +114,6 @@ button:hover {
 
 button.secondary {
     background-color: #444444;
-}
-
-button.secondary:hover {
-    background-color: #555555;
 }
 
 #logs {
@@ -93,19 +125,5 @@ button.secondary:hover {
     overflow-y: auto;
     font-size: 0.85rem;
     font-family: 'Consolas', monospace;
-    border: 1px solid #333333;
-    line-height: 1.4;
-}
-
-small {
-    display: block;
-    margin-top: 4px;
-    line-height: 1.2;
-}
-
-/* Ensure button group works with the new layout */
-.button-group {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
+    border: 1px solid #333;
 }
