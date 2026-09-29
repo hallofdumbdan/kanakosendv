@@ -12,6 +12,7 @@
     --error: #f04747;
     --warning: #faa61a;
     
+    /* New Pastel Colors */
     --pastel-green: #3e5c46;
     --pastel-red: #7a4a4a;
 }
@@ -23,7 +24,7 @@
 body {
     background-color: var(--bg-app);
     color: var(--text-primary);
-    font-family: 'gg sans', 'Noto Sans', sans-serif;
+    font-family: 'Inter', 'gg sans', sans-serif;
     margin: 0;
     padding: 40px 20px;
     display: flex;
@@ -40,13 +41,27 @@ header {
     margin-bottom: 40px;
 }
 
-h1 {
+/* Updated Header Font */
+.brand-title {
     margin: 0;
-    font-size: 2.2rem;
+    font-size: 2.5rem;
     font-weight: 800;
-    letter-spacing: -1px;
+    letter-spacing: -1.5px;
+    font-family: 'Inter', sans-serif;
 }
 
+/* Unified Label Styling */
+label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+/* Card Structure */
 .card {
     background-color: var(--bg-card);
     border-radius: 12px;
@@ -63,14 +78,16 @@ h1 {
     margin-bottom: 18px;
 }
 
-.card-header label {
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    color: var(--text-secondary);
-    letter-spacing: 1px;
+.form-group {
+    margin-bottom: 20px;
 }
 
+.input-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Inputs */
 input, textarea {
     width: 100%;
     padding: 12px;
@@ -80,6 +97,18 @@ input, textarea {
     color: var(--text-primary);
     font-size: 0.95rem;
     transition: box-shadow 0.2s;
+    font-family: inherit;
+}
+
+/* Remove Number Input Spinners */
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none; 
+    margin: 0; 
+}
+
+input[type=number] { 
+    -moz-appearance: textfield; 
 }
 
 input:focus, textarea:focus {
@@ -87,16 +116,24 @@ input:focus, textarea:focus {
     box-shadow: 0 0 0 2px var(--accent);
 }
 
+/* Mapping Row */
 .mapping-row {
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
+    padding: 8px;
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+
+.mapping-row:hover {
+    background: rgba(255, 255, 255, 0.03);
 }
 
 .mapping-row .input-group {
     flex: 1;
-    min-width: 0;
+    min-width: 0; 
 }
 
 .row-sep {
@@ -105,39 +142,41 @@ input:focus, textarea:focus {
     font-size: 0.9rem;
 }
 
-.icon-btn {
-    background: none;
-    border: none;
-    color: var(--text-secondary);
-    font-size: 1.5rem;
-    cursor: pointer;
-    padding: 0 5px;
-    transition: color 0.2s;
-}
-
-.add-btn {
-    color: var(--pastel-green);
-    font-size: 1.2rem;
-}
-
-.add-btn:hover {
-    color: #4e7a5a;
-}
-
 .remove-row-btn {
     background: none;
     border: none;
     color: var(--text-muted);
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     cursor: pointer;
     padding: 0 5px;
     transition: color 0.2s;
 }
 
 .remove-row-btn:hover {
-    color: var(--pastel-red);
+    color: var(--error);
 }
 
+.add-btn {
+    background: none;
+    border: none;
+    color: var(--pastel-green);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0 5px;
+    transition: color 0.2s;
+}
+
+.add-btn:hover {
+    color: #4e7a5a;
+}
+
+.helper-text {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 12px;
+}
+
+/* Buttons */
 .action-bar {
     display: flex;
     gap: 15px;
