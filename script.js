@@ -47,14 +47,14 @@ async function sendMessage(channelID, userToken, content) {
 }
 
 async function runTask(token, channelID, message, delay) {
-    const tokenId = `...${token.slice(-6)}`;
-    
     const attempt = async () => {
         const success = await sendMessage(channelID, token, message);
         if (success) {
-            logMessage(`${tokenId} $\rightarrow$ ${channelID}: Success`, '#43b581');
+            logMessage(`${channelID}: "${message}" → Success`, '#43b581');
+            console.log(`[Success] Channel: ${channelID} | Message: ${message}`);
         } else {
-            logMessage(`${tokenId} $\rightarrow$ ${channelID}: Failed. Stopping loop.`, '#f04747');
+            logMessage(`${channelID}: Failed. Stopping loop.`, '#f04747');
+            console.error(`[Failed] Channel: ${channelID}`);
             return false;
         }
         return true;
