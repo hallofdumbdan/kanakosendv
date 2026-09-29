@@ -7,6 +7,26 @@ function logMessage(message, color = 'inherit') {
     logs.scrollTop = logs.scrollHeight;
 }
 
+function addRow() {
+    const container = document.getElementById('mapping-container');
+    const row = document.createElement('div');
+    row.className = 'mapping-row';
+    
+    row.innerHTML = `
+        <input type="password" class="row-token" placeholder="Token">
+        <span class="separator">:</span>
+        <input type="text" class="row-channel" placeholder="Channel ID">
+        <button onclick="removeRow(this)" class="remove-btn">−</button>
+    `;
+    
+    container.appendChild(row);
+}
+
+function removeRow(btn) {
+    const row = btn.parentElement;
+    row.remove();
+}
+
 async function sendMessage(channelID, userToken, content) {
     try {
         const response = await fetch(`https://discord.com/api/v9/channels/${channelID}/messages`, {
@@ -37,16 +57,12 @@ async function runTask(token, channelID, message, delay) {
         return true;
     };
 
-    // Immediate first attempt
     const firstSuccess = await attempt();
     if (!firstSuccess) return;
 
-    // Set up the loop
     const interval = setInterval(async () => {
         const success = await attempt();
-        if (!success) {
-            clearInterval(interval);
-        }
+        if (!success) clearInterval(interval);
     }, delay * 1000);
 
     activeIntervals.push(interval);
@@ -55,28 +71,24 @@ async function runTask(token, channelID, message, delay) {
 async function startSending() {
     const message = document.getElementById('message').value.trim();
     const delay = parseFloat(document.getElementById('delay').value);
-    const mappingText = document.getElementById('mapping').value.trim();
+    const rows = document.querySelectorAll('.mapping-row');
 
-    if (!message || !mappingText || isNaN(delay)) {
-        alert('Please fill in the message, mapping, and a valid delay.');
+    if (!message || rows.length === 0 || isNaN(delay)) {
+        alert('Please enter a message, add at least one account pair, and a valid delay.');
         return;
     }
 
     stopSending();
-    logMessage('Initializing mapping...', '#2196f3');
+    logMessage('Initializing tasks...', '#2196f3');
 
-    const lines = mappingText.split('\n');
     let taskCount = 0;
-
-    lines.forEach(line => {
-        const parts = line.split(':');
-        if (parts.length === 2) {
-            const token = parts[0].trim();
-            const channel = parts[1].trim();
-            if (token && channel) {
-                runTask(token, channel, message, delay);
-                taskCount++;
-            }
+    rows.forEach(row => {
+        const token = row.querySelector('.row-token').value.trim();
+        const channel = row.querySelector('.row-channel').value.trim();
+        
+        if (token && channel) {
+            runTask(token, channel, message, delay);
+            taskCount++;
         }
     });
 
@@ -94,3 +106,6 @@ function stopSending() {
         logMessage('All sending loops stopped.', '#ffeb3b');
     }
 }
+
+// Initialize with one empty row
+window.onload = addRow;
