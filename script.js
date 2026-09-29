@@ -1,9 +1,9 @@
 let activeIntervals = [];
 
-function logMessage(message, color = '#E0E0E0') {
+function logMessage(message, color = '#e0e0e0') {
     const logs = document.getElementById('logs');
     const time = new Date().toLocaleTimeString([], { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
-    logs.innerHTML += `<div><span class="log-time">${time}</span> <span style="color: ${color}">${message}</span></div>`;
+    logs.innerHTML += `<div class="log-entry"><span class="log-time">${time}</span> <span style="color: ${color}">${message}</span></div>`;
     logs.scrollTop = logs.scrollHeight;
 }
 
@@ -13,17 +13,21 @@ function addRow() {
     row.className = 'mapping-row';
     
     row.innerHTML = `
-        <input type="password" class="row-token" placeholder="Token">
-        <span class="separator">:</span>
-        <input type="text" class="row-channel" placeholder="Channel ID">
-        <button onclick="removeRow(this)" class="remove-btn">&times;</button>
+        <div class="input-group">
+            <input type="password" class="row-token" placeholder="User Token">
+        </div>
+        <span class="row-sep">→</span>
+        <div class="input-group">
+            <input type="text" class="row-channel" placeholder="Channel ID">
+        </div>
+        <button onclick="removeRow(this)" class="remove-row-btn" title="Remove">&times;</button>
     `;
     
     container.appendChild(row);
 }
 
 function removeRow(btn) {
-    btn.parentElement.remove();
+    btn.closest('.mapping-row').remove();
 }
 
 async function sendMessage(channelID, userToken, content) {
@@ -50,7 +54,7 @@ async function runTask(token, channelID, message, delay) {
         if (success) {
             logMessage(`${tokenId} $\rightarrow$ ${channelID}: Success`, '#43b581');
         } else {
-            logMessage(`${tokenId} $\rightarrow$ ${channelID}: Failed. Stopping.`, '#f04747');
+            logMessage(`${tokenId} $\rightarrow$ ${channelID}: Failed. Stopping loop.`, '#f04747');
             return false;
         }
         return true;
@@ -73,12 +77,12 @@ async function startSending() {
     const rows = document.querySelectorAll('.mapping-row');
 
     if (!message || rows.length === 0 || isNaN(delay)) {
-        alert('Missing details. Please check message, mapping, and delay.');
+        alert('Please ensure message, at least one account pair, and a valid delay are provided.');
         return;
     }
 
     stopSending();
-    logMessage('Initializing tasks...', '#5865F2');
+    logMessage('Initializing deployment...', '#5865f2');
 
     let taskCount = 0;
     rows.forEach(row => {
@@ -92,9 +96,9 @@ async function startSending() {
     });
 
     if (taskCount === 0) {
-        logMessage('No valid pairs found.', '#f04747');
+        logMessage('No valid account pairs found.', '#f04747');
     } else {
-        logMessage(`Running ${taskCount} active threads.`, '#5865F2');
+        logMessage(`${taskCount} active threads deployed.`, '#5865f2');
     }
 }
 
@@ -102,11 +106,8 @@ function stopSending() {
     if (activeIntervals.length > 0) {
         activeIntervals.forEach(clearInterval);
         activeIntervals = [];
-        logMessage('All threads stopped.', '#faa61a');
+        logMessage('All threads terminated.', '#faa61a');
     }
 }
 
-// Ensure the first row is added only after the DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-    addRow();
-});
+window.onload = addRow;
