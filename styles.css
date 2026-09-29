@@ -12,7 +12,6 @@
     --error: #f04747;
     --warning: #faa61a;
     
-    /* New Pastel Colors */
     --pastel-green: #3e5c46;
     --pastel-red: #7a4a4a;
 }
@@ -41,7 +40,6 @@ header {
     margin-bottom: 40px;
 }
 
-/* Updated Header Font */
 .brand-title {
     margin: 0;
     font-size: 2.5rem;
@@ -50,7 +48,6 @@ header {
     font-family: 'Inter', sans-serif;
 }
 
-/* Unified Label Styling */
 label {
     display: block;
     font-size: 0.75rem;
@@ -61,7 +58,6 @@ label {
     margin-bottom: 10px;
 }
 
-/* Card Structure */
 .card {
     background-color: var(--bg-card);
     border-radius: 12px;
@@ -87,7 +83,6 @@ label {
     flex-direction: column;
 }
 
-/* Inputs */
 input, textarea {
     width: 100%;
     padding: 12px;
@@ -100,7 +95,6 @@ input, textarea {
     font-family: inherit;
 }
 
-/* Remove Number Input Spinners */
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button { 
     -webkit-appearance: none; 
@@ -116,7 +110,6 @@ input:focus, textarea:focus {
     box-shadow: 0 0 0 2px var(--accent);
 }
 
-/* Mapping Row */
 .mapping-row {
     display: flex;
     align-items: center;
@@ -176,7 +169,6 @@ input:focus, textarea:focus {
     margin-top: 12px;
 }
 
-/* Buttons */
 .action-bar {
     display: flex;
     gap: 15px;
@@ -214,7 +206,6 @@ button:hover {
     opacity: 0.9;
 }
 
-/* Logs */
 .log-container {
     background-color: #000;
     border-radius: 8px;
